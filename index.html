@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="normalize.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+	<script src="paper.js"></script>
+
+
+  <style type="text/css">
+
+  	a:link, a:active, a:visited {
+  		color: black;
+  		text-decoration: none;
+		}
+	a:hover{color: orangered;}
+
+  	#my_camera{position: absolute; top: 270px; left: 70px; z-index: -999; width:640px; height:480px;}
+  	#my_result{position: absolute; top: 270px; left: 70px; z-index: -999}
+    
+  	.mbar{position: fixed; top: 0px; left: 0px; width: 100%; height: 50px; font-family: 'Noto Sans KR', sans-serif; 
+	font-weight: 600; font-size: 1.7em; line-height: 1.7em; background-color: white; border-bottom: 1px solid black; z-index: 999; overflow: hidden; color: white; text-align: center;}
+	.mbar img{position: absolute; left: 0px; width: 100%; position: absolute; top: -420px; z-index: -999;}
+
+	.prsbox{margin: auto; text-align: center; margin-left: 40%; background-color: red;}
+	#pres{ position: fixed; bottom: 135px; left: 141px; z-index: 999; width: 245px; height: 40px; background-color: black; color: white;}
+
+	#pres img{width: 100%;}
+	#capture {position: fixed; bottom: 135px; left: 457px; z-index: 999; width: 245px; height: 40px; background-color: black; color: white; text-align: center; font-weight: 500; font-size: 1.15em; line-height: 2.1em; z-index: 999; cursor: pointer;}
+
+	.ftr{width: 100%; height: 80px; background-color: white; border-top: 1px solid black; position: fixed; bottom: 0px; left: 0px; text-align: center; font-weight: 700; font-size: 3.1em; z-index: 999;}
+
+	.bfbt{position: relative; top: 0px; left: 5px; float: left;}
+	.nwbt{position: relative; right: 143px;}
+	.nxbt{position: absolute; top: 0px; right: 5px; float: right;}
+	
+	.sin img{z-index: 999; width: 99%; position: absolute; left: 0.5%;}
+	.sin {margin: auto; margin-top: -152px;}
+
+	.allct{width: 100%; height: 1000px;  margin: auto; margin-top: 50px;}
+
+	.rsbox{width: 613px; height: 780px; position: absolute; right: 113px; top: 130px; font-family: 'Noto Sans KR', sans-serif; box-sizing: border-box; overflow: hidden;}
+	.nars{position: absolute; top: 0px; left: 0px; width: 100%; height: 80px; float: left; z-index: -999;}
+	.na1{position: relative; top: 0px; left: 0px; float: left; width: 100%; height: 70px; font-size: 2.7em; font-weight: 500; line-height: 1em; letter-spacing: -3px;}
+	.na2{position: relative; top: 0px; left: 0px; float: left; width: 100%; height: 70px; font-size: 2.7em; font-weight: 500; line-height: 1em; letter-spacing: -3px;}
+	.na3{position: relative; top: -70px; right: 0px; float: right; width: 47px; height: 70px; font-size: 2.5em; font-weight: 500; color: black; line-height: 1em;}
+
+	.namn{position: relative; top: 210px; left: 0px; width: 100%; height: 100px; font-weight: 300; font-size: 2em; letter-spacing: -0.5px;}
+	.chook{position: relative; top: 375px; left: 0px; width: 100%; height: 30px; font-size: 1em; font-weight: 500; letter-spacing: -0.5px;}
+
+	.email{position: relative; top: 375px; left: 0px; width: 100%; height: 60px; background-color: black; color: white; font-size: 2em; font-weight: 500; line-height: 1.8em; z-index: 999; text-align: center;}
+
+	.gukmun{position: absolute; top: 650px; left: 308px; width: 250px; height: 50px; overflow: hidden; z-index: 999;}
+	.yungmun{position: absolute; top: 720px; left: 308px; width: 250px; height: 50px; overflow: hidden; z-index: 999;} 
+
+	.gname{position: absolute; left: 50px; font-size: 3em; font-weight: 600; line-height: 1em;}
+	.yname{position: absolute; left: 90px; font-size: 1.5em; font-weight: 600; line-height: 1em; z-index: 999;}
+	.dt{position: absolute; left: 320px; top: 790px; width: 200px; height: 50px; z-index: 999; font-weight: 600; font-size: 1.5em; text-align: center;}
+
+  </style>
+</head>
+<body id="wrap">
+	
+	
+	  <div class="mbar">
+	  <img src="sunset.gif">
+	  < 신분증을 발급받으세요 >
+	</div>
+
+	
+
+	<div class="allct">
+
+	<center>
+        <video id="vidDisplay" autoplay="true">
+        	No Video
+        </video>
+    </center>	
+
+    
+	<div class="sin">
+		<img src="shin.png">
+
+		<div class="gukmun">
+			<textarea id="output" style="position: absolute; z-index: 999; width: 50px; font-size: 2.9em; font-weight: 600; line-height: 1em; border:none;"></textarea>
+			<div class="gname">알찬바로</div>
+		</div>
+		
+		<div class="yungmun">
+			<textarea id="outputt" style="position: absolute; z-index: 999; width: 90px; font-size: 1.5em; font-weight: 600; line-height: 0.8em; border:none;"></textarea>
+			<div class="yname">Alchanbaro</div>
+		</div>
+
+		<div class="dt">
+			2019.11.01
+		</div>
+		
+	</div>
+
+
+	<div id="my_camera"></div>
+	<div id="my_result"></div>
+
+	<div class="rsbox">
+
+
+		<input type="text" id="input" style="position: absolute; top: -10px; left: 117px; width: 50px; height: 65px; font-size: 2.7em; font-weight: 500; border:none; z-index: 999; line-height: 0.7em; text-align: center; letter-spacing: -3px;"><br>
+		
+
+		<input type="text" id="inputt" style="position: absolute; top: 60px; left: 115px; width: 110px; height: 65px; font-size: 2.7em; font-weight: 500; border:none; z-index: 999; line-height: 0.7em; text-align: center; letter-spacing: -4px;"><br>
+		
+
+		<button onclick="input()" style="position: absolute; top: 160px; right: 0px; width: 100%; z-index: 999; background-color: black; color: white; height: 60px; border:none; font-size: 2em; font-weight: 500;">저장</button>
+
+		<div id="pres">
+	  		<a href="javascript:void(take_snapshot())">
+	  			<img src="sagin.png">
+	  		</a>  	
+		</div>
+
+		
+		
+			
+			
+			
+		
+
+
+
+		<div class="nars">
+			<div class="na1">국문 : (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) 알찬바로</div>
+			<div class="na2">영문 : (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) Alchanbaro</div>
+			<div class="na3">님,</div>
+		</div>
+
+		<div class="namn">멋진 한글이름의 발급을 축하합니다.<br>알찬바로는 ‘알차고 바르게 살라는 뜻’으로 지은 이름입니다.</div>
+
+		<div class="chook">
+			저장된 등록증을 본인의 메일로 보내보세요.
+		</div>
+		
+
+		
+		<div class="email">
+			<a href="mailto:본인의 이메일주소?Subject=백만사람 한글이름 갖기 프로젝트 (저장된 등록증 이미지를%20불러오세요.)" style="color: white;">E-mail</a> 
+			</div>
+
+			<button onclick="myFunction()" style="position: absolute; z-index: 999;">Print this page</button>
+
+	<div class="ftr">
+
+		<div class="bfbt" style="z-index: 999;"><a href="page3.html">◀︎ 다시만들기</a></div>
+	    <div class="nwbt"><a href="index.html">HOME</a></div>
+	    <div class="nxbt"><a href="index.html">처음으로 ▶︎</a></div>
+
+	</div>
+
+	</div>
+	
+	<div id="capture" onclick="takeScreenShot()">
+    	등록증 저장하기
+	</div>
+
+	<script src="webcam.js"></script>
+
+	<script language="JavaScript">
+			function myFunction() {
+  				window.print();
+			}
+		    Webcam.attach( '#my_camera' );
+
+		    function take_snapshot() {
+		        Webcam.snap( function(data_uri) {
+		            document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
+		        } );
+		    }
+
+		    var temp; 
+
+			function input(){
+			var input = document.getElementById("input").value; 
+			temp = input;
+
+			document.getElementById("output").value = temp;
+
+			var input = document.getElementById("inputt").value; 
+			temp = input;
+
+			document.getElementById("outputt").value = temp;
+			}
+
+			
+	</script>
+	
+		
+	
+<script type="text/javascript">
+	var takeScreenShot = function() {
+		    html2canvas(document.getElementById("wrap"), {
+		        onrendered: function (canvas) {
+		            var tempcanvas=document.createElement('canvas');
+		            tempcanvas.width=1920;
+		            tempcanvas.height=980;
+		            var context=tempcanvas.getContext('2d');
+		            context.drawImage(canvas,0,0,1920,980,0,0,1920,980);
+		            var link=document.createElement("a");
+		            link.href=tempcanvas.toDataURL('image/jpg');   //function blocks CORS
+		            link.download = '한글이름.jpg';
+		            link.click();
+		        }
+		    });
+		}
+</script>
+	
+
+
+	</body>
+	</html>
